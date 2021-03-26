@@ -2,11 +2,10 @@ const pool = require("../config/mysql.conf");
 
 async function add(res, gear, userID) {
   try {
- 
     if (
-      !gear.task ||
-      gear.task.length < 1 ||
-      gear.task.length > 40 ||
+      !gear.item ||
+      gear.item.length < 1 ||
+      gear.item.length > 40 ||
       isNaN(userID)
     ) {
       throw "Invalid data provided";
@@ -14,7 +13,7 @@ async function add(res, gear, userID) {
 
     await pool.query(
       "INSERT INTO gear (user_ID, item, insured) VALUES (?,?,false)",
-      [userID, todo.task]
+      [userID, gear.item]
     );
 
     return res.send({
@@ -56,16 +55,16 @@ async function edit(res, gear, userID) {
   try {
     if (
       isNaN(gear.id) ||
-      !gear.task ||
-      gear.task.length < 1 ||
-      gear.task.length > 40 ||
+      !gear.item ||
+      gear.item.length < 1 ||
+      gear.item.length > 40 ||
       typeof gear.insured !== "boolean"
     ) {
       throw "Invalid data provided";
     }
     await pool.query(
       "UPDATE gear SET item = ?, insured = ? WHERE id = ? AND user_ID = ?",
-      [gear.task, gear.insured, gear.id, userID]
+      [gear.item, gear.insured, gear.id, userID]
     );
 
     return res.send({
@@ -84,8 +83,7 @@ async function edit(res, gear, userID) {
 
 async function all(res) {
   try {
-
-    const [todos] = await pool.query("SELECT * FROM gear");
+    const [gear] = await pool.query("SELECT * FROM gear");
 
     res.send({
       success: true,
@@ -103,13 +101,11 @@ async function all(res) {
 
 async function byUserID(res, userID) {
   try {
+    const [gear] = await pool.query(
+      "SELECT * FROM gear WHERE gear.user_ID = ?",
+      [userID]
+    );
 
-    const [
-      gear,
-    ] = await pool.query("SELECT * FROM todos WHERE todos.user_ID = ?", [
-      userID,
-    ]);
-  
     res.send({
       success: true,
       data: gear,

@@ -3,23 +3,23 @@ const router = express.Router();
 const gear = require("../models/gear.model");
 
 router.post("/add", (req, res) => {
-  return todos.add(res, req.body);
+  return gear.add(res, req.body);
 });
 
 router.delete("/delete/:id", (req, res) => {
-  return todos.remove(res, req.params.id);
+  return gear.remove(res, req.params.id);
 });
 
 router.patch("/update", (req, res) => {
-  return todos.edit(res, req.body);
+  return gear.edit(res, req.body);
 });
 
 router.get("/all", (req, res) => {
-  return todos.all(res);
+  return gear.all(res);
 });
 
 router.post("/user/:id", (req, res) => {
-  return todos.all(res, req.params.id);
+  return gear.all(res, req.params.id);
 });
 
 module.exports = router;
