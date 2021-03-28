@@ -18,8 +18,8 @@ router.post("/signup", (req, res) => {
   return user.signUp(res, req.body.username, req.body.password);
 });
 
-router.post("/login", (req, res) => {
-  passport.authenticate("local-login", (err, user, info) => {
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
     if (err) {
       return res.send({
         success: false,
@@ -38,10 +38,10 @@ router.post("/login", (req, res) => {
       return res.send({
         success: true,
         data: { username: user.username },
-        error: null,
+        error: "Signed in",
       });
     });
-  })(req, res);
+  })(req, res, next);
 });
 
 router.get("/logout", (req, res) => {

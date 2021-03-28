@@ -12,8 +12,10 @@ const bodyParser = require("body-parser");
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.static(__dirname + "/build"));
 app.use(express.json());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/users", userRoutes);
 
 app.use("/users", userRoutes);
@@ -21,6 +23,9 @@ app.use("/gear", gearRoutes);
 app.use("/onTour", onTourRoutes);
 
 app.get("/", (req, res) => res.send("Bandages App"));
-app.get("*", (req, res) => res.redirect("/"));
+// app.get("*", (req, res) => res.redirect("/"));
+app.get("*", (req, res) => {
+  res.sendFile("/build/index.html", { root: __dirname + "/" });
+});
 
 app.listen(port, () => console.log(`The club is open on port ${port}!`));
