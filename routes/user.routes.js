@@ -38,7 +38,8 @@ router.post("/login", (req, res, next) => {
       return res.send({
         success: true,
         data: { username: user.username },
-        error: "Signed in",
+        // error: "Welcome back, " + `${user.username}` + "!",
+        error: null,
       });
     });
   })(req, res, next);

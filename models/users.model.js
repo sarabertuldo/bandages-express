@@ -6,7 +6,6 @@ function isInvalid(val, min, max) {
 }
 
 async function signUp(res, username, password) {
-  console.log(username, password);
   try {
     if (isInvalid(username, 8, 16) || isInvalid(password, 8, 20)) {
       throw "Invalid Data Provided";
@@ -17,7 +16,7 @@ async function signUp(res, username, password) {
       username,
     ]);
     if (user.length > 0) {
-      throw "Username is already taken";
+      throw "Username is already taken!";
     }
     const encrypted = await bcrypt.hash(password, 8);
     await pool.query("INSERT INTO users (username, password) VALUES (?,?)", [

@@ -4,7 +4,6 @@ const express = require("express");
 const app = express();
 const userRoutes = require("./routes/user.routes");
 const gearRoutes = require("./routes/gear.routes");
-const onTourRoutes = require("./routes/onTour.routes");
 
 const port = process.env.PORT || 3000;
 
@@ -20,7 +19,6 @@ app.use("/users", userRoutes);
 
 app.use("/users", userRoutes);
 app.use("/gear", gearRoutes);
-app.use("/onTour", onTourRoutes);
 
 app.get("/", (req, res) => res.send("Bandages App"));
 // app.get("*", (req, res) => res.redirect("/"));
