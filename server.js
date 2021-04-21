@@ -29,9 +29,9 @@ app.use("/users", userRoutes);
 app.use("/gear", gearRoutes);
 
 app.get("/", (req, res) => res.send("Bandages App"));
-app.get("*", (req, res) => res.redirect("/"));
-// app.get("*", (req, res) => {
-//   res.sendFile("/build/index.html", { root: __dirname + "/" });
-// });
+// app.get("*", (req, res) => res.redirect("/"));
+app.get("*", (req, res) => {
+  res.sendFile("/build/index.html", { root: __dirname + "/" });
+});
 
 app.listen(port, () => console.log(`The club is open on port ${port}!`));
