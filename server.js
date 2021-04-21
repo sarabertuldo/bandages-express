@@ -6,7 +6,7 @@ const session = require("express-session");
 const userRoutes = require("./routes/user.routes");
 const gearRoutes = require("./routes/gear.routes");
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 const bodyParser = require("body-parser");
 app.use(passport.initialize());
