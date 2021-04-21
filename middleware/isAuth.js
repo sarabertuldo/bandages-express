@@ -1,5 +1,6 @@
 function isAuth(req, res, next) {
-  if (!req.user) {
+  console.log(req.session.passport.user);
+  if (!req.session.passport.user) {
     return res.status(401).send({
       success: false,
       data: null,

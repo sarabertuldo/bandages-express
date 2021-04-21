@@ -31,7 +31,7 @@ router.post("/login", (req, res, next) => {
       return res.send({ success: false, data: null, error: info });
     }
     req.logIn(user, (err) => {
-      res.cookie("name", "boml&ma4ubbb", {
+      res.cookie("name", "hhh34534lksdqGP", {
         httpOnly: true,
         secure: true,
       });

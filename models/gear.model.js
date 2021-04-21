@@ -12,8 +12,8 @@ async function add(res, gear, userID) {
     }
 
     await pool.query(
-      "INSERT INTO gear (user_ID, item, insured) VALUES (?,?,false)",
-      [userID, gear.item]
+      "INSERT INTO gear (user_id, bandmate, item, insured, on_tour, notes) VALUES (?, ?, ?,false, false, ?)",
+      [userID, gear.bandmate, gear.item, gear.insured, gear.on_tour, gear.notes]
     );
 
     return res.send({
@@ -57,14 +57,21 @@ async function edit(res, gear, userID) {
       isNaN(gear.id) ||
       !gear.item ||
       gear.item.length < 1 ||
-      gear.item.length > 40 ||
-      typeof gear.insured !== "boolean"
+      gear.item.length > 40
     ) {
       throw "Invalid data provided";
     }
     await pool.query(
-      "UPDATE gear SET item = ?, insured = ? WHERE id = ? AND user_ID = ?",
-      [gear.item, gear.insured, gear.id, userID]
+      "UPDATE gear SET bandmate = ?, item = ?, notes = ?, insured = ?, on_tour = ? WHERE id = ? AND user_ID = ?",
+      [
+        gear.bandmate,
+        gear.item,
+        gear.notes,
+        gear.insured,
+        gear.on_tour,
+        gear.id,
+        userID,
+      ]
     );
 
     return res.send({
@@ -81,9 +88,11 @@ async function edit(res, gear, userID) {
   }
 }
 
-async function all(res) {
+async function all(res, req) {
   try {
-    const [gear] = await pool.query("SELECT * FROM gear");
+    const [gear] = await pool.query("SELECT * FROM gear WHERE user_id = ?", [
+      req.session.passport.user,
+    ]);
 
     res.send({
       success: true,
