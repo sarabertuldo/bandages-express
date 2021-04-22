@@ -12,7 +12,7 @@ async function add(res, gear, userID) {
     }
 
     await pool.query(
-      "INSERT INTO gear (user_id, bandmate, item, insured, on_tour, notes) VALUES (?, ?, ?,false, false, ?)",
+      "INSERT INTO gear (user_id, bandmate, item, insured, on_tour, notes) VALUES (?, ?, ?, false, false, ?)",
       [userID, gear.bandmate, gear.item, gear.insured, gear.on_tour, gear.notes]
     );
 

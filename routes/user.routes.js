@@ -31,14 +31,13 @@ router.post("/login", (req, res, next) => {
       return res.send({ success: false, data: null, error: info });
     }
     req.logIn(user, (err) => {
-      res.cookie("name", "hhh34534lksdqGP", {
-        httpOnly: true,
-        secure: true,
-      });
+      // res.cookie("name", "hhh34534lksdqGP", {
+      //   httpOnly: true,
+      //   secure: true,
+      // });
       return res.send({
         success: true,
         data: { username: user.username },
-        // error: "Welcome back, " + `${user.username}` + "!",
         error: null,
       });
     });
