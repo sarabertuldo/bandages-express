@@ -10,10 +10,15 @@ async function add(res, gear, userID) {
     ) {
       throw "Invalid data provided";
     }
+    const bandmate = gear.bandmate;
+    const item = gear.item;
+    const insured = gear.insured || false;
+    const on_tour = gear.on_tour || false;
+    const notes = gear.notes || "";
 
     await pool.query(
-      "INSERT INTO gear (user_id, bandmate, item, insured, on_tour, notes) VALUES (?, ?, ?, false, false, ?)",
-      [userID, gear.bandmate, gear.item, gear.insured, gear.on_tour, gear.notes]
+      "INSERT INTO gear (user_id, bandmate, item, insured, on_tour, notes) VALUES (?, ?, ?, ?, ?, ?)",
+      [userID, bandmate, item, insured, on_tour, notes]
     );
 
     return res.send({
@@ -31,11 +36,13 @@ async function add(res, gear, userID) {
   }
 }
 
-async function remove(res, id, userID) {
+async function remove(res, id) {
   try {
+    console.log(id);
     await pool.query(
-      "DELETE FROM gear WHERE gear.id = ? AND gear.user_ID = ?",
-      [id, userID]
+      "DELETE FROM gear WHERE gear.id = ?",
+      // DELETE FROM `gear` WHERE `gear`.`id` = 5
+      [id]
     );
     return res.send({
       success: true,
@@ -61,6 +68,9 @@ async function edit(res, gear, userID) {
     ) {
       throw "Invalid data provided";
     }
+    console.log("update query");
+    console.log(gear);
+
     await pool.query(
       "UPDATE gear SET bandmate = ?, item = ?, notes = ?, insured = ?, on_tour = ? WHERE id = ? AND user_ID = ?",
       [

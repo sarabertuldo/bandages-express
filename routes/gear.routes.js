@@ -4,6 +4,7 @@ const gear = require("../models/gear.model");
 const isAuth = require("../middleware/isAuth");
 
 router.post("/add", isAuth, (req, res) => {
+  console.log(req.body);
   return gear.add(res, req.body, req.session.passport.user);
 });
 
